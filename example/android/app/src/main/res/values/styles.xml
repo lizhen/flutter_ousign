@@ -1,0 +1,119 @@
+<resources>
+  <style name="LaunchTheme" parent="@android:style/Theme.Black.NoTitleBar">
+    <!-- Show a splash screen on the activity. Automatically removed when
+         Flutter draws its first frame -->
+    <item name="android:windowBackground">@drawable/launch_background</item>
+  </style>
+  <style name="AppTheme" parent="AppTheme.Base">
+  </style>
+  <!-- Base application theme. -->
+  <style name="AppTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+    <item name="windowActionBar">false</item>
+    <item name="windowNoTitle">true</item>
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/colorAccent</item>
+  </style>
+
+  <style name="CustomEditText" parent="android:Widget.EditText">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">match_parent</item>
+    <item name="android:background">@drawable/edit</item>
+    <item name="android:textColorHint">@color/text_hint</item>
+    <item name="android:textColor">@drawable/edit_text_selector</item>
+    <item name="android:textSize">15sp</item>
+    <item name="android:gravity">center_vertical</item>
+    <item name="android:layout_gravity">center_vertical</item>
+    <item name="android:layout_marginLeft">@dimen/custom_left_margin</item>
+    <item name="android:singleLine">true</item>
+  </style>
+
+  <style name="CustomNoMarginEditText" parent="android:Widget.EditText">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">match_parent</item>
+    <item name="android:background">@drawable/edit</item>
+    <item name="android:textColorHint">@color/text_hint</item>
+    <item name="android:textColor">@drawable/edit_text_selector</item>
+    <item name="android:textSize">15sp</item>
+    <item name="android:gravity">center_vertical</item>
+    <item name="android:layout_gravity">center_vertical</item>
+    <item name="android:singleLine">true</item>
+  </style>
+
+  <style name="SipPasswordEditText" parent="android:Widget.EditText">
+    <item name="android:background">@drawable/password</item>
+    <item name="android:textColorHint">@color/text_hint</item>
+    <item name="android:textColor">@drawable/edit_text_selector</item>
+    <item name="android:textSize">18sp</item>
+    <item name="android:gravity">center_vertical</item>
+    <item name="android:layout_gravity">center_vertical</item>
+    <item name="android:layout_marginLeft">20dp</item>
+    <item name="android:singleLine">true</item>
+  </style>
+
+  <style name="CustomButton" parent="android:Widget.Button">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_marginTop">30dp</item>
+    <item name="android:layout_marginLeft">35dp</item>
+    <item name="android:layout_marginRight">35dp</item>
+    <item name="android:gravity">center_horizontal</item>
+    <item name="android:paddingTop">14dp</item>
+    <item name="android:paddingBottom">14dp</item>
+    <item name="android:background">@drawable/button_selector</item>
+    <item name="android:textColor">@android:color/white</item>
+    <item name="android:textSize">16sp</item>
+  </style>
+
+  <style name="LabelText" parent="android:Widget.TextView">
+    <item name="android:layout_width">110dp</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_gravity">center_vertical</item>
+    <item name="android:textColor">@color/text_input</item>
+    <item name="android:textSize">15sp</item>
+  </style>
+
+  <style name="FixedLayout">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">@dimen/base_height</item>
+    <item name="android:background">@drawable/bg_line_layout</item>
+    <item name="android:paddingLeft">@dimen/linear_horizontal_padding</item>
+    <item name="android:paddingRight">@dimen/linear_horizontal_padding</item>
+    <item name="android:paddingTop">1px</item>
+    <item name="android:paddingBottom">1px</item>
+  </style>
+
+  <style name="FixedClickableLayout" parent="FixedLayout">
+    <item name="android:background">@drawable/linear_background_selector</item>
+    <item name="android:clickable">true</item>
+  </style>
+
+
+  <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+  <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+<!--  <style name="SplashTheme" parent="AppTheme.Base">-->
+<!--    <item name="android:windowBackground">@drawable/splash</item>-->
+<!--  </style>-->
+
+  <style name="Widget"/>
+
+  <style name="Widget.SampleMessage">
+    <item name="android:textAppearance">?android:textAppearanceMedium</item>
+    <item name="android:lineSpacingMultiplier">1.1</item>
+  </style>
+
+  <style name="ProgressDialog" parent="@android:style/Theme.Dialog">
+    <item name="android:windowBackground">@android:color/transparent</item>
+    <item name="android:windowFrame">@null</item>
+    <item name="android:windowContentOverlay">@null</item>
+    <item name="android:windowAnimationStyle">@null</item>
+    <item name="android:backgroundDimEnabled">false</item>
+    <item name="android:windowIsTranslucent">true</item>
+    <item name="android:windowNoTitle">true</item>
+    <item name="android:windowCloseOnTouchOutside">false</item>
+    <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+  </style>
+
+</resources>
