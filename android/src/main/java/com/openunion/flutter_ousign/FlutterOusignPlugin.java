@@ -1,10 +1,16 @@
 package com.openunion.flutter_ousign;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 
+import com.openunion.flutter_ousign.base.BaseActivity;
 import com.openunion.flutter_ousign.constant.OuSignPluginMethods;
 import com.openunion.flutter_ousign.handler.HKEApiWrapper;
 import com.openunion.flutter_ousign.verifypassword.VerifyPasswordDialog;
+
+import java.util.Map;
 
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
@@ -13,17 +19,27 @@ import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
 
 /** FlutterOusignPlugin */
-public class FlutterOusignPlugin implements MethodCallHandler {
+public class FlutterOusignPlugin extends BaseActivity implements MethodCallHandler {
   private final Registrar registrar;
+  private final MethodChannel channel;
 
-  private FlutterOusignPlugin(Registrar registrar) {
+  private FlutterOusignPlugin(Registrar registrar, MethodChannel channel) {
     this.registrar = registrar;
+    this.channel = channel;
+  }
+
+  private Activity getActivity(){
+    return registrar.activity();
+  }
+
+  private Context getApplicationContext(){
+    return registrar.activity().getApplicationContext();
   }
 
   /** Plugin registration. */
   public static void registerWith(Registrar registrar) {
     final MethodChannel channel = new MethodChannel(registrar.messenger(), "plugins.openunion.cn/flutter_ousign");
-    channel.setMethodCallHandler(new FlutterOusignPlugin(registrar));
+    channel.setMethodCallHandler(new FlutterOusignPlugin(registrar, channel));
   }
 
   @Override
@@ -34,28 +50,28 @@ public class FlutterOusignPlugin implements MethodCallHandler {
         result.success("Android " + android.os.Build.VERSION.RELEASE);
         break;
       case OuSignPluginMethods.INITIALIZE:
-        HKEApiWrapper.initialize(registrar, call, result);
+        HKEApiWrapper.initialize(registrar, (Map)call.arguments, result);
         break;
       case OuSignPluginMethods.REQUEST_RANDOM:
-        HKEApiWrapper.getInstance().requestRandom(call).subscribe(s -> result.success("requestRandom " + s));
+        HKEApiWrapper.getInstance().requestRandom((Map)call.arguments).subscribe(s -> result.success("requestRandom " + s));
         break;
       case OuSignPluginMethods.AUTHENTICATE:
-        HKEApiWrapper.getInstance().authenticate(call).subscribe(s -> result.success("authenticate " + s));
+        HKEApiWrapper.getInstance().authenticate((Map)call.arguments).subscribe(s -> result.success("authenticate " + s));
         break;
       case OuSignPluginMethods.DOWNLOAD_CERTIFICATE:
-        HKEApiWrapper.getInstance().downloadCertificate(call).subscribe(s -> result.success("downloadCertificate " + s));
+        HKEApiWrapper.getInstance().downloadCertificate((Map)call.arguments).subscribe(s -> result.success("downloadCertificate " + s));
         break;
       case OuSignPluginMethods.SIGN:
-        HKEApiWrapper.getInstance().sign(call).subscribe(s -> result.success("sign " + s));
+        HKEApiWrapper.getInstance().sign((Map)call.arguments).subscribe(s -> result.success("sign " + s));
         break;
       case OuSignPluginMethods.SET_PASSWORD:
-        HKEApiWrapper.getInstance().setPassword(call).subscribe(s -> result.success("setPassword " + s));
+        HKEApiWrapper.getInstance().setPassword((Map)call.arguments).subscribe(s -> result.success("setPassword " + s));
         break;
       case OuSignPluginMethods.CHANGE_PASSWORD:
-        HKEApiWrapper.getInstance().changePassword(call).subscribe(s -> result.success("changePassword " + s));
+        HKEApiWrapper.getInstance().changePassword((Map)call.arguments).subscribe(s -> result.success("changePassword " + s));
         break;
       case OuSignPluginMethods.VERIFY_PASSWORD:
-        HKEApiWrapper.getInstance().verifyPassword(call).subscribe(s -> result.success("verifyPassword " + s));
+        HKEApiWrapper.getInstance().verifyPassword((Map)call.arguments).subscribe(s -> result.success("verifyPassword " + s));
         break;
       case OuSignPluginMethods.SHOW_VERIFY_PASSWORD:
         showVerifyPasswordDialog();
@@ -65,7 +81,7 @@ public class FlutterOusignPlugin implements MethodCallHandler {
       case OuSignPluginMethods.GET_ENCRYPT_DATA:
         break;
       case OuSignPluginMethods.CANCEL:
-        HKEApiWrapper.getInstance().cancel(call);
+        HKEApiWrapper.getInstance().cancel((Map)call.arguments);
         break;
       default:
         result.notImplemented();
@@ -73,14 +89,18 @@ public class FlutterOusignPlugin implements MethodCallHandler {
     }
   }
 
-  protected void showVerifyPasswordDialog() {
-    VerifyPasswordDialog dialog = VerifyPasswordDialog.newInstance();
-    showDialogFragment(dialog, VerifyPasswordDialog.class);
+  @Override
+  protected int layoutId() {
+    return 0;
   }
 
-  protected <T extends DialogFragment> void showDialogFragment(T dialogFragment, Class<T> clz) {
-    getSupportFragmentManager().beginTransaction()
-            .add(dialogFragment, clz.getName())
-            .commitAllowingStateLoss();
+  @Override
+  public void showLoading() {
+
+  }
+
+  @Override
+  public void hideLoading() {
+
   }
 }

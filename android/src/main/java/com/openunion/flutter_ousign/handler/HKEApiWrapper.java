@@ -2,6 +2,7 @@ package com.openunion.flutter_ousign.handler;
 
 import com.openunion.flutter_ousign.constant.Constants;
 
+import java.util.Map;
 import java.util.logging.Logger;
 
 import cn.com.cfca.sdk.hke.Callback;
@@ -36,20 +37,20 @@ public class HKEApiWrapper {
         return hkeApi.isSupportSE();
     }
 
-    public static void initialize(Registrar registrar, MethodCall call, Result result) {
+    public static void initialize(Registrar registrar, Map arguments, Result result) {
         logger.info(">>>initialize<<<");
 
-        String orgID = call.argument(Constants.ORG_ID);
+        String orgID = (String) arguments.get(Constants.ORG_ID);
         if (orgID == null || orgID.isEmpty()) {
             throw new IllegalStateException("OrgID is a required parameter");
         }
 
-        String appID = call.argument(Constants.APP_ID);
+        String appID = (String) arguments.get(Constants.APP_ID);
         if (appID == null || appID.isEmpty()) {
             throw new IllegalStateException("AppID is a required parameter");
         }
 
-        boolean isProd = call.argument(Constants.IS_PROD);
+        boolean isProd = (Boolean) arguments.get(Constants.IS_PROD);
 
 
         HKEWithPasswordApi.initialize(registrar.context(), orgID, appID, isProd ? HKEServiceType.PRODUCT : HKEServiceType.TEST);
@@ -81,35 +82,35 @@ public class HKEApiWrapper {
      * @return 服务器端随机数
      */
     // public Flowable<String> requestHKEServerRandom(final String name, final String identityType, final String identityCardNumber, final String phoneNumber, final String deviceID, final String userInfo) {
-    public Flowable<String> requestRandom(final MethodCall call) {
+    public Flowable<String> requestRandom(final Map arguments) {
         logger.info(">>>requestHKEServerRandom<<<");
 
-        String userName = call.argument(Constants.USER_NAME);
+        String userName = (String) arguments.get(Constants.USER_NAME);
         if (userName == null || userName.isEmpty()) {
             throw new IllegalStateException("UserName is a required parameter");
         }
 
-        String identityTypeCode = call.argument(Constants.IDENTITY_TYPE_CODE);
+        String identityTypeCode = (String) arguments.get(Constants.IDENTITY_TYPE_CODE);
         if (identityTypeCode == null || identityTypeCode.isEmpty()) {
             throw new IllegalStateException("IdentityTypeCode is a required parameter");
         }
 
-        String identityNumber = call.argument(Constants.IDENTITY_NUMBER);
+        String identityNumber = (String) arguments.get(Constants.IDENTITY_NUMBER);
         if (identityNumber == null || identityNumber.isEmpty()) {
             throw new IllegalStateException("IdentityNumber is a required parameter");
         }
 
-        String phoneNumber = call.argument(Constants.PHONE_NUMBER);
+        String phoneNumber = (String) arguments.get(Constants.PHONE_NUMBER);
         if (phoneNumber == null || phoneNumber.isEmpty()) {
             throw new IllegalStateException("PhoneNumber is a required parameter");
         }
 
-        String deviceID = call.argument(Constants.DEVICE_ID);
+        String deviceID = (String) arguments.get(Constants.DEVICE_ID);
         if (deviceID == null || deviceID.isEmpty()) {
             throw new IllegalStateException("DeviceID is a required parameter");
         }
 
-        String userInfo = call.argument(Constants.USER_INFO);
+        String userInfo = (String) arguments.get(Constants.USER_INFO);
         if (userInfo == null) {
             throw new IllegalStateException("UserInfo is a required parameter");
         }
@@ -136,10 +137,10 @@ public class HKEApiWrapper {
      * @param serverRandomSignature 使用机构证书对身份认证返回的随机数做的签名（用以鉴别客户端身份）
      */
     // public Flowable<AuthenticateInfo> authenticate(final String serverRandomSignature) {
-    public Flowable<String> authenticate(final MethodCall call) {
+    public Flowable<String> authenticate(final Map arguments) {
         logger.info(">>>authenticate<<<");
 
-        String serverSignature = call.argument(Constants.SERVER_SIGNATURE);
+        String serverSignature = (String) arguments.get(Constants.SERVER_SIGNATURE);
         if (serverSignature == null || serverSignature.isEmpty()) {
             throw new IllegalStateException("ServerSignature is a required parameter");
         }
@@ -175,10 +176,10 @@ public class HKEApiWrapper {
      * @return 证书对象
      */
     // public Flowable<CFCACertificate> downloadCertificate(String extension) {
-    public Flowable<String> downloadCertificate(final MethodCall call) {
+    public Flowable<String> downloadCertificate(final Map arguments) {
         logger.info(">>>downloadCertificate<<<");
 
-        String extension = call.argument(Constants.ENTENSION);
+        String extension = (String) arguments.get(Constants.ENTENSION);
         if (extension == null || extension.isEmpty()) {
             throw new IllegalStateException("Extension is a required parameter");
         }
@@ -208,25 +209,25 @@ public class HKEApiWrapper {
      * @param encryptedCilentRandom 安全控件用于加密的客户端随机数
      */
     // public Flowable<String> sign(final String businessText, final String businessTextSignature, final String encryptedPassword, final String encryptedCilentRandom) {
-    public Flowable<String> sign(final MethodCall call) {
+    public Flowable<String> sign(final Map arguments) {
         logger.info(">>>sign<<<");
 
-        String businessText = call.argument(Constants.BUSINESS_TEXT);
+        String businessText = (String) arguments.get(Constants.BUSINESS_TEXT);
         if (businessText == null || businessText.isEmpty()) {
             throw new IllegalStateException("BusinessText is a required parameter");
         }
 
-        String businessTextSignature = call.argument(Constants.BUSINESS_TEXT_SIGNATURE);
+        String businessTextSignature = (String) arguments.get(Constants.BUSINESS_TEXT_SIGNATURE);
         if (businessTextSignature == null || businessTextSignature.isEmpty()) {
             throw new IllegalStateException("BusinessTextSignature is a required parameter");
         }
 
-        String encryptedPassword = call.argument(Constants.ENCRYPTED_PASSWORD);
+        String encryptedPassword = (String) arguments.get(Constants.ENCRYPTED_PASSWORD);
         if (encryptedPassword == null || encryptedPassword.isEmpty()) {
             throw new IllegalStateException("EncryptedPassword is a required parameter");
         }
 
-        String encryptedClientRandom = call.argument(Constants.ENCRYPTED_CLIENT_RANDOM);
+        String encryptedClientRandom = (String) arguments.get(Constants.ENCRYPTED_CLIENT_RANDOM);
         if (encryptedClientRandom == null || encryptedClientRandom.isEmpty()) {
             throw new IllegalStateException("EncryptedClientRandom is a required parameter");
         }
@@ -254,15 +255,15 @@ public class HKEApiWrapper {
      * @param encryptedClientRandom 安全控件用于加密的客户端随机数
      */
     // public Flowable<Object> setPassword(final String encryptedPassword, final String encryptedClientRandom) {
-    public Flowable<Object> setPassword(final MethodCall call) {
+    public Flowable<Object> setPassword(final Map arguments) {
         logger.info(">>>setPassword<<<");
 
-        String encryptedPassword = call.argument(Constants.ENCRYPTED_PASSWORD);
+        String encryptedPassword = (String) arguments.get(Constants.ENCRYPTED_PASSWORD);
         if (encryptedPassword == null || encryptedPassword.isEmpty()) {
             throw new IllegalStateException("EncryptedPassword is a required parameter");
         }
 
-        String encryptedClientRandom = call.argument(Constants.ENCRYPTED_CLIENT_RANDOM);
+        String encryptedClientRandom = (String) arguments.get(Constants.ENCRYPTED_CLIENT_RANDOM);
         if (encryptedClientRandom == null || encryptedClientRandom.isEmpty()) {
             throw new IllegalStateException("EncryptedClientRandom is a required parameter");
         }
@@ -291,25 +292,25 @@ public class HKEApiWrapper {
      * @param newEncryptedCilentRandom      新密码客户端随机数
      */
     // public Flowable<Object> changePassword(final String originalEncryptedPassword, final String originalEncryptedCilentRandom, final String newEncryptedPassword, final String newEncryptedCilentRandom) {
-    public Flowable<Object> changePassword(final MethodCall call) {
+    public Flowable<Object> changePassword(final Map arguments) {
         logger.info(">>>changePassword<<<");
 
-        String originalEncryptedPassword = call.argument(Constants.ORIGINAL_ENCRYPTED_PASSWORD);
+        String originalEncryptedPassword = (String) arguments.get(Constants.ORIGINAL_ENCRYPTED_PASSWORD);
         if (originalEncryptedPassword == null || originalEncryptedPassword.isEmpty()) {
             throw new IllegalStateException("originalEncryptedPassword is a required parameter");
         }
 
-        String originalEncryptedCilentRandom = call.argument(Constants.ORIGINAL_ENCRYPTED_CLIENT_RANDOM);
+        String originalEncryptedCilentRandom = (String) arguments.get(Constants.ORIGINAL_ENCRYPTED_CLIENT_RANDOM);
         if (originalEncryptedCilentRandom == null || originalEncryptedCilentRandom.isEmpty()) {
             throw new IllegalStateException("originalEncryptedCilentRandom is a required parameter");
         }
 
-        String newEncryptedPassword = call.argument(Constants.NEW_ENCRYPTED_PASSWORD);
+        String newEncryptedPassword = (String) arguments.get(Constants.NEW_ENCRYPTED_PASSWORD);
         if (newEncryptedPassword == null || newEncryptedPassword.isEmpty()) {
             throw new IllegalStateException("newEncryptedPassword is a required parameter");
         }
 
-        String newEncryptedCilentRandom = call.argument(Constants.NEW_ENCRYPTED_CLIENT_RANDOM);
+        String newEncryptedCilentRandom = (String) arguments.get(Constants.NEW_ENCRYPTED_CLIENT_RANDOM);
         if (newEncryptedCilentRandom == null || newEncryptedCilentRandom.isEmpty()) {
             throw new IllegalStateException("newEncryptedCilentRandom is a required parameter");
         }
@@ -337,15 +338,15 @@ public class HKEApiWrapper {
      * @param encryptedClientRandom 客户端随机数
      */
     // public Flowable<Object> verifyPassword(final String encryptedPassword, final String encryptedClientRandom) {
-    public Flowable<Object> verifyPassword(final MethodCall call) {
+    public Flowable<Object> verifyPassword(final Map arguments) {
         logger.info(">>>verifyPassword<<<");
 
-        String encryptedPassword = call.argument(Constants.ENCRYPTED_PASSWORD);
+        String encryptedPassword = (String) arguments.get(Constants.ENCRYPTED_PASSWORD);
         if (encryptedPassword == null || encryptedPassword.isEmpty()) {
             throw new IllegalStateException("EncryptedPassword is a required parameter");
         }
 
-        String encryptedClientRandom = call.argument(Constants.ENCRYPTED_CLIENT_RANDOM);
+        String encryptedClientRandom = (String) arguments.get(Constants.ENCRYPTED_CLIENT_RANDOM);
         if (encryptedClientRandom == null || encryptedClientRandom.isEmpty()) {
             throw new IllegalStateException("EncryptedClientRandom is a required parameter");
         }
@@ -369,12 +370,12 @@ public class HKEApiWrapper {
     /**
      * 取消
      *
-     * @param call
+     * @param arguments
      */
-    public void cancel(final MethodCall call) {
+    public void cancel(final Map arguments) {
         logger.info(">>>cancel<<<");
 
-        String methodCode = call.argument("methodCode");
+        String methodCode = (String) arguments.get("methodCode");
         if (methodCode == null || methodCode.isEmpty()) {
             throw new IllegalStateException("MethodCode is a required parameter");
         }
